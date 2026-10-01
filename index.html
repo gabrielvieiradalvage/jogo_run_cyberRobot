@@ -1,131 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
-    <!-- Custom PreHead code is injected here -->
-    
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta charset="utf-8"/>
 
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name ="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta charset="utf-8"/>
+    <meta http-equiv="pragma" content="no-cache"/>
 
-        <!-- Builtin injector for disabling cache -->
-        <meta http-equiv="pragma" content="no-cache"/>
+    <title>Cyber Robot Run</title>
 
-        <!-- Set the title bar of the page -->
-        <title>Nome temporario</title>
+    <!-- Fontes Estilo Cyberpunk -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-        <!-- Custom PreStyle code is injected here -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #121826 0%, #05070a 100%);
+            color: #00f0ff;
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Cabeçalho do Jogo */
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff;
+            margin: 0 0 5px 0;
+            letter-spacing: 2px;
+        }
+
+        p.subtitle {
+            font-size: 0.9rem;
+            color: #ff007f;
+            text-shadow: 0 0 5px #ff007f;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Moldura Neon ao redor do Jogo */
+        .game-wrapper {
+            position: relative;
+            padding: 4px;
+            background: linear-gradient(135deg, #00f0ff, #ff007f);
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.3);
+        }
+
+        .game-container {
+            background: #05070a;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            display: block;
+            image-rendering: optimizeSpeed;
+            -webkit-interpolation-mode: nearest-neighbor;
+            -ms-touch-action: none;
+            touch-action: none;
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        :-webkit-full-screen #canvas {
+            width: 100%;
+            height: 100%;
+        }
+        :-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+        }
         
+        /* Custom Runner Styles */
+        div.gm4html5_div_class {
+            margin: 0px;
+            padding: 0px;
+            border: 0px;
+        }
+        div.gm4html5_login {
+            padding: 20px;
+            position: absolute;
+            border: solid 2px #00f0ff;
+            background-color: #121826;
+            color: #00f0ff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        div.gm4html5_cancel_button {
+            float: right;
+        }
+        div.gm4html5_login_button {
+            float: left;
+        }
+        div.gm4html5_login_header {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+        }
 
-        <!-- Set the background colour of the document -->
-        <style>
-            body {
-                background: #0;
-                color: #cccccc;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
+        /* Rodapé */
+        footer {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #8a9bb8;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
 
-            canvas {
-                image-rendering: optimizeSpeed;
-                -webkit-interpolation-mode: nearest-neighbor;
-                -ms-touch-action: none;
-                touch-action: none;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            :-webkit-full-screen #canvas {
-                width: 100%;
-                height: 100%;
-            }
-            :-webkit-full-screen {
-                width: 100%;
-                height: 100%;
-            }
-            
-            /* Custom Runner Styles */
-            div.gm4html5_div_class {
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            div.gm4html5_login {
-                padding: 20px;
-                position: absolute;
-                border: solid 2px #000000;
-                background-color: #404040;
-                color:#00ff00;
-                border-radius: 15px;
-                box-shadow: #101010 20px 20px 40px;
-            }
-            div.gm4html5_cancel_button {
-                float: right;
-            }
-            div.gm4html5_login_button {
-                float: left;
-            }
-            div.gm4html5_login_header {
-                text-align: center;
-            }
-            /* END - Custom Runner Styles */
-            
-        </style>
+<body>
 
-        <!-- Custom PostStyle code is injected here -->
-        
+    <header>
+        <h1>CYBER ROBOT RUN</h1>
+        <p class="subtitle">&gt;&gt; SYSTEM ONLINE &lt;&lt;</p>
+    </header>
 
-        <!-- Builtin injector for injecting flurry analytics code -->
-        
-    </head>
-
-    <!-- Custom PostHead code is injected here -->
-    
-
-    <!-- Custom PreBody code is injected here -->
-    
-
-    <body>
-        <!-- Custom BodyStart code is injected here -->
-        
-
-        <div class="gm4html5_div_class" id="gm4html5_div_id">
-            
-            <!-- Builtin injector for splash screen -->
-            
-
-            <!-- Custom PreCanvas code is injected here -->
-            
-
-            <!-- Create the canvas element the game draws to -->
-            <canvas id="canvas" width="1366" height="768" >
+    <div class="game-wrapper">
+        <div class="game-container">
+            <div class="gm4html5_div_class" id="gm4html5_div_id">
                 
-                <p>Your browser doesn't support HTML5 canvas.</p>
-            </canvas>
-            
-            <!-- Custom PostCanvas code is injected here -->
-            
+                <!-- Canvas do GameMaker -->
+                <canvas id="canvas" width="1366" height="768">
+                    <p>Your browser doesn't support HTML5 canvas.</p>
+                </canvas>
+                
+            </div>
         </div>
+    </div>
 
-        <!-- Run the game code -->
-        <script type="text/javascript" src="html5game/Nome temporario.js?cachebust=629581849"></script>
+    <footer>
+        GameMaker HTML5 Engine &bull; All Systems Operational
+    </footer>
 
-        <!-- Builtin injector for injecting runner path -->
-        
+    <!-- Run the game code -->
+    <!-- Nota: se você alterar o nome do projeto no GameMaker e exportar de novo, lembre-se de atualizar o nome do arquivo .js aqui se ele mudar -->
+    <script type="text/javascript" src="html5game/Nome temporario.js?cachebust=629581849"></script>
 
-        <script>window.onload = GameMaker_Init;</script>
+    <script>window.onload = GameMaker_Init;</script>
 
-        <!-- Builtin injector for injecting google analytics code -->
-        
+</body>
 
-        <!-- Custom BodyEnd code is injected here -->
-        
-    </body>
-
-    <!-- Custom PostBody code is injected here -->
-    
 </html>
