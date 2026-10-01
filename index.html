@@ -25,7 +25,7 @@
             color: #00f0ff;
             font-family: 'Share Tech Mono', monospace;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,21 +37,21 @@
         /* Cabeçalho do Jogo */
         header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 2rem;
+            font-size: 1.6rem;
             color: #fff;
-            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff;
-            margin: 0 0 5px 0;
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+            margin: 0 0 3px 0;
             letter-spacing: 2px;
         }
 
         p.subtitle {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #ff007f;
             text-shadow: 0 0 5px #ff007f;
             margin: 0;
@@ -59,26 +59,34 @@
             text-transform: uppercase;
         }
 
-        /* Moldura Neon ao redor do Jogo */
+        /* Moldura Neon reduzida e centralizada */
         .game-wrapper {
             position: relative;
-            padding: 4px;
+            padding: 3px;
             background: linear-gradient(135deg, #00f0ff, #ff007f);
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(255, 0, 127, 0.2);
+            max-width: 900px; /* Controla o tamanho ideal na tela */
+            width: 100%;
         }
 
         .game-container {
             background: #05070a;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
+        /* Canvas ajustado para não ficar gigante */
         canvas {
             display: block;
+            width: 100% !important;
+            height: auto !important;
+            max-height: 75vh;
+            object-fit: contain;
             image-rendering: optimizeSpeed;
             -webkit-interpolation-mode: nearest-neighbor;
             -ms-touch-action: none;
@@ -86,8 +94,52 @@
             margin: 0px;
             padding: 0px;
             border: 0px;
-            max-width: 100%;
-            height: auto;
+        }
+
+        /* Tela de Início para liberar áudio e som */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 10, 0.94);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99;
+            transition: opacity 0.4s ease;
+        }
+
+        #start-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #05070a;
+            background: linear-gradient(135deg, #00f0ff, #00ff88);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+            background: linear-gradient(135deg, #ff007f, #00f0ff);
+            color: #fff;
+        }
+
+        .start-hint {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #8a9bb8;
+            letter-spacing: 1px;
         }
 
         :-webkit-full-screen #canvas {
@@ -99,11 +151,14 @@
             height: 100%;
         }
         
-        /* Custom Runner Styles */
         div.gm4html5_div_class {
             margin: 0px;
             padding: 0px;
             border: 0px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         div.gm4html5_login {
             padding: 20px;
@@ -128,8 +183,8 @@
 
         /* Rodapé */
         footer {
-            margin-top: 15px;
-            font-size: 0.8rem;
+            margin-top: 10px;
+            font-size: 0.75rem;
             color: #8a9bb8;
             letter-spacing: 1px;
         }
@@ -145,14 +200,20 @@
 
     <div class="game-wrapper">
         <div class="game-container">
+            
+            <!-- Tela de Clique para Ativar o Áudio e Iniciar -->
+            <div id="start-screen">
+                <button id="start-btn">&#9658; INICIAR SISTEMA</button>
+                <div class="start-hint">Clique para ativar áudio e iniciar o jogo</div>
+            </div>
+
             <div class="gm4html5_div_class" id="gm4html5_div_id">
-                
                 <!-- Canvas do GameMaker -->
                 <canvas id="canvas" width="1366" height="768">
                     <p>Your browser doesn't support HTML5 canvas.</p>
                 </canvas>
-                
             </div>
+
         </div>
     </div>
 
@@ -161,10 +222,22 @@
     </footer>
 
     <!-- Run the game code -->
-    <!-- Nota: se você alterar o nome do projeto no GameMaker e exportar de novo, lembre-se de atualizar o nome do arquivo .js aqui se ele mudar -->
     <script type="text/javascript" src="html5game/Nome temporario.js?cachebust=629581849"></script>
 
-    <script>window.onload = GameMaker_Init;</script>
+    <script>
+        // Dispara o GameMaker após o clique do usuário (autorizando o navegador a tocar músicas/sons)
+        document.getElementById('start-btn').addEventListener('click', function() {
+            var startScreen = document.getElementById('start-screen');
+            startScreen.style.opacity = '0';
+            setTimeout(function() {
+                startScreen.style.display = 'none';
+            }, 400);
+
+            if (typeof GameMaker_Init === 'function') {
+                GameMaker_Init();
+            }
+        });
+    </script>
 
 </body>
 
